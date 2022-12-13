@@ -1,6 +1,8 @@
 import java.awt.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,11 +26,13 @@ public class UserView extends JFrame {
 
     private MainFrame mainFrame;
 
-    private List<Post> newsfeed;
+    static List<Post> newsfeed;
 
     private JTextArea textArea;
 
     private JTextArea textArea_1;
+
+    List<String> lastUpdate;
 
 
     /**
@@ -38,7 +42,7 @@ public class UserView extends JFrame {
 
         // setting of the user view frame
         this.user = user;
-        setTitle(user.ID);
+        setTitle(user.ID + ",creat time " + user.creatingTime);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 454, 412);
         contentPane = new JPanel();
@@ -172,12 +176,40 @@ public class UserView extends JFrame {
     void updateNewsFeed() {
 
         String postView = "";
+
         for (Post message : newsfeed) {
 
             postView += String.format(" - %s:%s\n", message.getPostID(), message.getData());
+
         }
         textArea_1.setText(postView);
 
+    }
+
+    public static List<String> postList(){
+
+        List<String> list = new ArrayList<>();
+        String postView = "";
+
+        for (Post message : newsfeed) {
+
+            postView = String.format(" - %s:%s\n", message.getPostID(), message.getData());
+            list.add(postView);
+        }
+        return list;
+    }
+
+    public String dataTime() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            String dateStr = sdf.format(date);
+            //System.out.println(dateStr);
+            return dateStr;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -185,11 +217,14 @@ public class UserView extends JFrame {
      */
     void postMessage() {
 
+
         String data = this.txtEnterTweetMessage.getText();
+        String dateTime = dataTime();
+        user.setUpdateTime(dateTime);
 
         if (data.length() > 0) {
 
-            user.postMessage(data);
+            user.postMessage(data + " " + dateTime);
 
             this.txtEnterTweetMessage.setText("");
         }

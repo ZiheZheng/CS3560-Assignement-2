@@ -3,6 +3,11 @@ import java.util.List;
 
 public class User {
 
+
+
+    String creatingTime;
+    String updateTime;
+
     /**
      * User's ID
      */
@@ -23,12 +28,30 @@ public class User {
      */
     List<Post> posts;
 
+    public String getCreatingTime() {
+        return creatingTime;
+    }
+
+    public void setCreatingTime(String creatingTime) {
+        this.creatingTime = creatingTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
     /**
      * User's constructor
      * @param ID
      */
-    public User(String ID) {
+    public User(String ID, String creatingTime, String updateTime) {
         this.ID = ID;
+        this.creatingTime = creatingTime;
+        this.updateTime = updateTime;
         followersList = new ArrayList<>();
         followingsList = new ArrayList<>();
         posts = new ArrayList<>();

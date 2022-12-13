@@ -4,10 +4,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * Main frame of the application
@@ -60,6 +60,7 @@ public class MainFrame extends JFrame {
 
     /**
      * create user view
+     *
      * @param user
      * @return
      */
@@ -90,7 +91,7 @@ public class MainFrame extends JFrame {
         // set main frame attribute
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 631, 544);
-        setTitle("Jacob's Mini Twitter @ CPP");
+        setTitle("Jacob's Mini Twitter 2.0 @ CPP");
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -113,17 +114,17 @@ public class MainFrame extends JFrame {
         DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("CS356");
 
         // Define user
-        User student1 = new User("stu1");
-        User student2 = new User("stu2");
-        User student3 = new User("stu3");
+        User student1 = new User("stu1",dataTime(),dataTime());
+        User student2 = new User("stu2",dataTime(),dataTime());
+        User student3 = new User("stu3",dataTime(),dataTime());
 
-        User student8 = new User("stu8");
-        User student9 = new User("stu9");
-        User student10 = new User("stu10");
+        User student8 = new User("stu8",dataTime(),dataTime());
+        User student9 = new User("stu9",dataTime(),dataTime());
+        User student10 = new User("stu10",dataTime(),dataTime());
 
-        User john = new User("John");
-        User bob = new User("Bob");
-        User steve = new User("Steve");
+        User john = new User("John",dataTime(),dataTime());
+        User bob = new User("Bob",dataTime(),dataTime());
+        User steve = new User("Steve",dataTime(),dataTime());
 
         // create tree node
         DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode("CS356Session01");
@@ -141,8 +142,8 @@ public class MainFrame extends JFrame {
         root.add(new DefaultMutableTreeNode(bob));
         root.add(new DefaultMutableTreeNode(steve));
 
-        User oostu = new User("oostu");
-        User ppstu2 = new User("ppstu2");
+        User oostu = new User("oostu",dataTime(),dataTime());
+        User ppstu2 = new User("ppstu2",dataTime(),dataTime());
 
         root.add(node_1);
         root.add(node_2);
@@ -205,9 +206,9 @@ public class MainFrame extends JFrame {
                 Object object = node.getUserObject();
                 if (node.isLeaf()) {
                     User user = (User) object;
-                    System.out.println("select user: " + user.toString());
+                    System.out.println("selecting user: " + user.toString());
                 } else {
-                    System.out.println("select group: " + object.toString());
+                    System.out.println("selecting group: " + object.toString());
                 }
 
             }
@@ -219,10 +220,10 @@ public class MainFrame extends JFrame {
 
         // TextField for username
         txtEnterNameHere = new JTextField();
-        txtEnterNameHere.setText("Enter name here: ");
+        txtEnterNameHere.setText("");
         txtEnterNameHere.setHorizontalAlignment(JButton.CENTER);
         txtEnterNameHere.setToolTipText("");
-        txtEnterNameHere.setBounds(206, 11, 173, 37+30);
+        txtEnterNameHere.setBounds(206, 11, 173, 37 + 30);
         contentPane.add(txtEnterNameHere);
         txtEnterNameHere.setColumns(10);
 
@@ -234,16 +235,16 @@ public class MainFrame extends JFrame {
         btnNewButton.setIcon(pointingFinger);
         btnNewButton.setFocusable(false);
         btnNewButton.addActionListener(e -> addUser());
-        btnNewButton.setBounds(406, 11, 199+5, 37+30);
+        btnNewButton.setBounds(406, 11, 199 + 5, 37 + 30);
         contentPane.add(btnNewButton);
 
         //TextField for Group ID
         txtEnterGroupId = new JTextField();
         txtEnterGroupId.setToolTipText("");
-        txtEnterGroupId.setText("Enter Group ID here: ");
+        txtEnterGroupId.setText("");
         txtEnterGroupId.setHorizontalAlignment(JButton.CENTER);
         txtEnterGroupId.setColumns(10);
-        txtEnterGroupId.setBounds(206, 59+30, 173, 37+30);
+        txtEnterGroupId.setBounds(206, 59 + 30, 173, 37 + 30);
         contentPane.add(txtEnterGroupId);
 
         // Button for add Group
@@ -253,7 +254,7 @@ public class MainFrame extends JFrame {
         btnAddGroup.setIcon(pointingFinger);
         btnAddGroup.setFocusable(false);
         btnAddGroup.addActionListener(e -> addGroup());
-        btnAddGroup.setBounds(406, 59+30, 199+5, 37+30);
+        btnAddGroup.setBounds(406, 59 + 30, 199 + 5, 37 + 30);
         contentPane.add(btnAddGroup);
 
         // Button for open user view
@@ -262,7 +263,7 @@ public class MainFrame extends JFrame {
         btnNewButton_2.setBorder(BorderFactory.createEtchedBorder());
         btnNewButton_2.setFocusable(false);
         btnNewButton_2.addActionListener(e -> launchUserView());
-        btnNewButton_2.setBounds(206, 107+60, 399, 52);
+        btnNewButton_2.setBounds(206, 107 + 60, 399, 52);
         contentPane.add(btnNewButton_2);
 
         // Button for show user total
@@ -271,7 +272,7 @@ public class MainFrame extends JFrame {
         btnNewButton_1.setBorder(BorderFactory.createEtchedBorder());
         btnNewButton_1.setFocusable(false);
         btnNewButton_1.addActionListener(e -> totalUser());
-        btnNewButton_1.setBounds(206, 289, 173, 63);
+        btnNewButton_1.setBounds(206, 295, 173, 63);
         contentPane.add(btnNewButton_1);
 
         // Button for show Group total
@@ -280,7 +281,7 @@ public class MainFrame extends JFrame {
         btnNewButton_3.setBorder(BorderFactory.createEtchedBorder());
         btnNewButton_3.addActionListener(e -> totalGroup());
         btnNewButton_3.setFocusable(false);
-        btnNewButton_3.setBounds(406, 289, 199, 63);
+        btnNewButton_3.setBounds(406, 295, 199, 63);
         contentPane.add(btnNewButton_3);
 
         // Button for show post total
@@ -301,11 +302,62 @@ public class MainFrame extends JFrame {
         btnNewButton_5.setBounds(406, 362, 199, 65);
         contentPane.add(btnNewButton_5);
 
+        JButton btnNewButton_6 = new JButton("Verify user/group ID");
+        btnNewButton_6.setBackground(Color.lightGray);
+        btnNewButton_6.setBorder(BorderFactory.createEtchedBorder());
+        btnNewButton_6.setFocusable(false);
+        btnNewButton_6.addActionListener(e -> verify());
+        btnNewButton_6.setBounds(206, 230, 173, 65);
+        contentPane.add(btnNewButton_6);
+
+        JButton btnNewButton_7 = new JButton("Last update");
+        btnNewButton_7.setBackground(Color.lightGray);
+        btnNewButton_7.setBorder(BorderFactory.createEtchedBorder());
+        btnNewButton_7.setFocusable(false);
+        btnNewButton_7.addActionListener(e -> lastUpdate());
+        btnNewButton_7.setBounds(406, 230, 199, 63);
+        contentPane.add(btnNewButton_7);
+
+
+    }
+
+    public void verify() {
+
+        String userName = txtEnterNameHere.getText();
+        String groupName = txtEnterGroupId.getText();
+        String space = " ";
+
+        if (userName != ""){
+
+            if (getIndexByUserId(userName) != -1) {
+                JOptionPane.showMessageDialog(null, "User name already exists");
+
+            }
+
+            if (userName.contains(space)) {
+                JOptionPane.showMessageDialog(null, "User name can not contain space");
+
+            }
+        }
+
+        if (groupName != ""){
+
+            if (groupIdSet.contains(groupName)) {
+                JOptionPane.showMessageDialog(null, "Group ID already exists");
+
+            }
+
+            if (groupName.contains(space)) {
+                JOptionPane.showMessageDialog(null, "Group ID can not contain space");
+
+            }
+        }
 
     }
 
     /**
-     *  get user index by ID
+     * get user index by ID
+     *
      * @param id
      * @return
      */
@@ -324,6 +376,8 @@ public class MainFrame extends JFrame {
     void addUser() {
 
         String userId = txtEnterNameHere.getText();
+
+
         if (userId.equals("")) {
             return;
         }
@@ -331,7 +385,7 @@ public class MainFrame extends JFrame {
             System.out.println("user id already exists");
             return;
         }
-        User user = new User(userId);
+        User user = new User(userId,dataTime(),dataTime());
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
         if (node == null)
             return;
@@ -382,7 +436,7 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     *  Launch user view
+     * Launch user view
      */
     void launchUserView() {
 
@@ -398,6 +452,25 @@ public class MainFrame extends JFrame {
             }
         }
     }
+
+
+    public void lastUpdate() {
+
+
+        List<String> list1 = null;
+        try {
+            list1 = UserView.postList();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "You need to open user view and post " +
+                    "something first");
+
+        } finally {
+            new Statistic("Last Update", list1);
+        }
+
+
+    }
+
 
     /**
      * function to show total user
@@ -465,6 +538,7 @@ public class MainFrame extends JFrame {
 
     /**
      * update all follwers
+     *
      * @param user
      */
     void updateAllFollowers(User user) {
@@ -474,7 +548,6 @@ public class MainFrame extends JFrame {
             if (index != -1) {
 
                 UserView userView = userViewList.get(index);
-                System.out.println("updateAllFollowers: " + fan.ID);
                 userView.updatePost(false);
             }
         }
@@ -485,6 +558,18 @@ public class MainFrame extends JFrame {
             }
         }
         postList.sort((a, b) -> (int) (b.time - a.time));
+    }
+
+    public String dataTime(){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            String dateStr = sdf.format(date);
+            return  dateStr;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
