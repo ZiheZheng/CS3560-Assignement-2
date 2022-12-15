@@ -42,9 +42,9 @@ public class UserView extends JFrame {
 
         // setting of the user view frame
         this.user = user;
-        setTitle(user.ID + ",creat time " + user.creatingTime);
+        setTitle(user.ID + " , creat time: " + user.creatingTime + ", last update: " + user.lastUpdatetime);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 454, 412);
+        setBounds(100, 100, 600, 412);
         contentPane = new JPanel();
         contentPane.setToolTipText("");
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -199,18 +199,6 @@ public class UserView extends JFrame {
         return list;
     }
 
-    public String dataTime() {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date();
-            String dateStr = sdf.format(date);
-            //System.out.println(dateStr);
-            return dateStr;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
      * get the user input, and post message
@@ -219,8 +207,8 @@ public class UserView extends JFrame {
 
 
         String data = this.txtEnterTweetMessage.getText();
-        String dateTime = dataTime();
-        user.setUpdateTime(dateTime);
+        String dateTime = MainFrame.dataTime();
+        user.setLastUpdatetime(dateTime);
 
         if (data.length() > 0) {
 
@@ -231,6 +219,7 @@ public class UserView extends JFrame {
 
         this.updatePost(true);
     }
+
 
     void setMainFrame(MainFrame mainFrame) {
         this.mainFrame = mainFrame;

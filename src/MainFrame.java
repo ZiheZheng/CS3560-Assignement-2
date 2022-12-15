@@ -111,7 +111,7 @@ public class MainFrame extends JFrame {
 
         // Create tree node
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
-        DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("CS356");
+       /* DefaultMutableTreeNode node_1 = new DefaultMutableTreeNode("CS356");*/
 
         // Define user
         User student1 = new User("stu1",dataTime(),dataTime());
@@ -126,17 +126,23 @@ public class MainFrame extends JFrame {
         User bob = new User("Bob",dataTime(),dataTime());
         User steve = new User("Steve",dataTime(),dataTime());
 
+        Group group1 = new Group("CS356", dataTime());
+        Group group2 = new Group("CS356Session01", dataTime());
+
         // create tree node
-        DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode("CS356Session01");
+        DefaultMutableTreeNode node_2 = new DefaultMutableTreeNode(group1);
+        DefaultMutableTreeNode node_3 = new DefaultMutableTreeNode(group2);
 
         // add children tree node to parents tree node
-        node_2.add(new DefaultMutableTreeNode(student8));
-        node_2.add(new DefaultMutableTreeNode(student9));
-        node_2.add(new DefaultMutableTreeNode(student10));
 
-        node_1.add(new DefaultMutableTreeNode(student1));
-        node_1.add(new DefaultMutableTreeNode(student2));
-        node_1.add(new DefaultMutableTreeNode(student3));
+        node_2.add(new DefaultMutableTreeNode(student1));
+        node_2.add(new DefaultMutableTreeNode(student2));
+        node_2.add(new DefaultMutableTreeNode(student3));
+
+        node_3.add(new DefaultMutableTreeNode(student8));
+        node_3.add(new DefaultMutableTreeNode(student9));
+        node_3.add(new DefaultMutableTreeNode(student10));
+
 
         root.add(new DefaultMutableTreeNode(john));
         root.add(new DefaultMutableTreeNode(bob));
@@ -145,7 +151,7 @@ public class MainFrame extends JFrame {
         User oostu = new User("oostu",dataTime(),dataTime());
         User ppstu2 = new User("ppstu2",dataTime(),dataTime());
 
-        root.add(node_1);
+        root.add(node_3);
         root.add(node_2);
 
         root.add(new DefaultMutableTreeNode(oostu));
@@ -164,8 +170,6 @@ public class MainFrame extends JFrame {
         userList.add(student9);
         userList.add(student10);
 
-        // initialized follow status -> john follows steve
-        john.follow(steve);
 
         // create user view
         createUserView(john);
@@ -208,7 +212,8 @@ public class MainFrame extends JFrame {
                     User user = (User) object;
                     System.out.println("selecting user: " + user.toString());
                 } else {
-                    System.out.println("selecting group: " + object.toString());
+                    Group group = (Group) object;
+                    System.out.println("selecting group: " + group.getName()+" " + group.getCreatTime());
                 }
 
             }
@@ -314,7 +319,8 @@ public class MainFrame extends JFrame {
         btnNewButton_7.setBackground(Color.lightGray);
         btnNewButton_7.setBorder(BorderFactory.createEtchedBorder());
         btnNewButton_7.setFocusable(false);
-        btnNewButton_7.addActionListener(e -> lastUpdate());
+        //btnNewButton_7.addActionListener(e -> lastUpdate());
+        btnNewButton_7.addActionListener(e -> showLastUpdate());
         btnNewButton_7.setBounds(406, 230, 199, 63);
         contentPane.add(btnNewButton_7);
 
@@ -354,6 +360,16 @@ public class MainFrame extends JFrame {
         }
 
     }
+
+    void showLastUpdate(){
+        List<User> lists = userList;
+        SortUser sortClass = new SortUser();
+        Collections.sort(lists,sortClass);
+        System.out.println("last update user:");
+        System.out.println(lists.get(0));
+
+    }
+
 
     /**
      * get user index by ID
@@ -472,6 +488,8 @@ public class MainFrame extends JFrame {
     }
 
 
+
+
     /**
      * function to show total user
      */
@@ -560,7 +578,7 @@ public class MainFrame extends JFrame {
         postList.sort((a, b) -> (int) (b.time - a.time));
     }
 
-    public String dataTime(){
+    public static String dataTime(){
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();

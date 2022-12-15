@@ -6,7 +6,8 @@ public class User {
 
 
     String creatingTime;
-    String updateTime;
+
+    String lastUpdatetime;
 
     /**
      * User's ID
@@ -36,13 +37,15 @@ public class User {
         this.creatingTime = creatingTime;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getLastUpdatetime() {
+        return lastUpdatetime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setLastUpdatetime(String lastUpdatetime) {
+        this.lastUpdatetime = lastUpdatetime;
     }
+
+
 
     /**
      * User's constructor
@@ -51,7 +54,7 @@ public class User {
     public User(String ID, String creatingTime, String updateTime) {
         this.ID = ID;
         this.creatingTime = creatingTime;
-        this.updateTime = updateTime;
+        this.lastUpdatetime = updateTime;
         followersList = new ArrayList<>();
         followingsList = new ArrayList<>();
         posts = new ArrayList<>();
@@ -80,6 +83,6 @@ public class User {
 
     @Override
     public String toString() {
-        return ID;
+        return  ID + " last update time " + lastUpdatetime;
     }
 }
